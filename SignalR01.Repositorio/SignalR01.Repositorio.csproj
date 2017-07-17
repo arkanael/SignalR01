@@ -53,7 +53,7 @@
     <Compile Include="Mapeamentos\ContaMap.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistencia\BaseRepositorio.cs" />
-    <Compile Include="Persistencia\ContaContrato.cs" />
+    <Compile Include="Persistencia\ContaRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

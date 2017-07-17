@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SignalR01.Repositorio.Persistencia
 {
-    public class ContaContrato : BaseRepositorio<Conta>, IContaRepositorio
+    public class ContaRepositorio : BaseRepositorio<Conta>, IContaRepositorio
     {
 
     }
