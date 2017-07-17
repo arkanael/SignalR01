@@ -4,6 +4,114 @@
     Layout = "~/Views/Shared/Layout.cshtml";
 }
 
+@section script{
+    <script type="text/javascript">
+
+        //Inicializando os eventos do Jquery
+        $(document).ready(function () {
+
+            //Quando apertar o botão de pesquisa
+            $("#btnpesquisa").click(function () {
+                pesquisarContas();
+                
+            });
+        });
+
+        //função para realizar a requisição de pesquisa ao controller..
+        function pesquisarContas() {
+
+            //JSON - JavaScript Object Notation..
+            var dados = {
+                DataInicio: $("#datainicio").val(),
+                DataTermino: $("#datatermino").val()
+            };
+
+            //requisição ao servidor..
+            $.ajax({
+                type: "POST",
+                url: "/Conta/PesquisarContas",
+                data: dados,
+                success: function (lista) {
+
+                    //criar uma referencia para o conteudo da tabela..
+                    var tabela = $("#tabela tbody");
+
+                    //limpar o conteudo da tabela..
+                    tabela.empty();
+
+                    //varrer a lista obtida no controller..
+                    $.each(lista, function (i, conta) {
+
+                        var conteudo = "<tr>";
+                        conteudo += "<td>" + conta.Id + "</td>";
+                        conteudo += "<td>" + conta.Nome + "</td>";
+                        conteudo += "<td>" + conta.Tipo + "</td>";
+                        conteudo += "<td>" + conta.Data + "</td>";
+                        conteudo += "<td>" + conta.Valor + "</td>";
+                        conteudo += "</tr>";
+
+                        tabela.append(conteudo);
+                    });
+
+                    $("#quantidade").html(lista.length);
+                },
+                error: function (e) {
+                    $("#mensagem").html(e.status);
+                }
+            });
+        }
+
+
+
+    </script>
+
+}
+
 <h4>Consulta de Contas</h4>
 <a href="/Home/Index">Voltar</a> para a página inicial.
 
+<div class="row">
+    <div class="col-md-4">
+
+        <label>Data de Inicio:</label>
+        <input type="date" id="datainicio" class="form-control" /> 
+        <br /> 
+
+        <label>Data de Termino:</label>
+        <input type="date" id="datatermino" class="form-control" />
+        <br /> 
+
+        <button id="btnpesquisa" class="btn btn-success"> Pesquisar Contas </button> 
+        <br /> 
+        <br />
+        
+        <div id="mensagem"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <table id="tabela" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome da Conta</th>
+                    <th>Tipo</th>
+                    <th>Data</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">Quantidade de contas:<span id="quantidade"></span></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>

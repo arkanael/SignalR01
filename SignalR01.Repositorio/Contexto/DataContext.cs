@@ -13,7 +13,7 @@ namespace SignalR01.Repositorio.Contexto
 {
     public class DataContext : DbContext
     {
-        public DataContext():base("Base")
+        public DataContext():base("DataBase")
         {
            
         }

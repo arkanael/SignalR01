@@ -19,10 +19,10 @@
             //Resgatar dados dos campos
             //JSON -> JavaScript Object Notation
             var dados = {
-                Nome: $("#nome").val(),
+                Nome : $("#nome").val(),
                 Valor: $("#valor").val(),
-                Data: $("#data").val(),
-                Tipo: $("#tipo").val()
+                Data : $("#data").val(),
+                Tipo : $("#tipo").val()
             };
 
             //Mensagem
@@ -31,9 +31,9 @@
             //Requisição para o controller MVC.
             $.ajax({
                 type: "POST",
-                url: "/Conta/CadastraConta",
+                url: "/Conta/CadastrarConta",
                 data: dados,
-                success: function () {
+                success: function (msg) {
                     $("#mensagem").html(msg);
                     $(".form-control").val("");
                 },

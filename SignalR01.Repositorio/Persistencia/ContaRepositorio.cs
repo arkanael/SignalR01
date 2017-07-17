@@ -10,6 +10,12 @@ namespace SignalR01.Repositorio.Persistencia
 {
     public class ContaRepositorio : BaseRepositorio<Conta>, IContaRepositorio
     {
-
+        public List<Conta> ListarPorData(DateTime dataIni, DateTime dateFim)
+        {
+            return contexto.Conta
+                .Where(c => c.Data >= dataIni && c.Data <= dateFim)
+                .OrderBy(c => c.Data)
+                .ToList();
+        }
     }
 }
