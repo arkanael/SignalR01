@@ -3,9 +3,80 @@
     ViewBag.Title = "Cadastro";
     Layout = "~/Views/Shared/Layout.cshtml";
 }
+@section script{
+    <script type="text/javascript">
+        //Iniciando o jquery
+        $(document).ready(function () {
+
+            //Criar evento no botão de cadastro
+            $("#btncadastro").click(function () {
+                cadastrarConta();
+            });
+        });
+
+        //Função paraa fazer uma requisição ao ContaController de maneira a cadastrar uma conta
+        function cadastrarConta() {
+            //Resgatar dados dos campos
+            //JSON -> JavaScript Object Notation
+            var dados = {
+                Nome: $("#nome").val(),
+                Valor: $("#valor").val(),
+                Data: $("#data").val(),
+                Tipo: $("#tipo").val()
+            };
+
+            //Mensagem
+            $("#mensagem").html("Enviando dados para cadastro...");
+
+            //Requisição para o controller MVC.
+            $.ajax({
+                type: "POST",
+                url: "/Conta/CadastraConta",
+                data: dados,
+                success: function () {
+                    $("#mensagem").html(msg);
+                    $(".form-control").val("");
+                },
+                error: function (e) {
+                    $("#mensagem").html(e.status);
+                }
+            });
+        }
+    </script>    
+    
+    }
 
 <h4>Cadastro de Contas</h4>
 <a href="/Home/Index">Voltar</a> para a página inicial.
 <hr />
 
+<div class="row">
+    <div class="col-md-4">
+        
+        <label>Nome da Conta:</label>
+        <input type="text" id="nome" class="form-control"/>
+        <br />
+
+        <label>Valor da Conta:</label>
+        <input type="text" id="valor" class="form-control"/>
+        <br />
+
+        <label>Data da Conta</label>
+        <input type="date" id="data" class="form-control" />
+        <br />
+
+        <label>Tipo Conta</label>
+        <select id="tipo" class="form-control">
+            <option value="">Selecione uma Opção</option>
+            <option value="1">Receita</option>
+            <option value="2">Despesa</option>
+        </select>
+        <br />
+
+        <button id="btncadastro" class="btn btn-success">Cadastrar Conta</button>
+        <br />
+        <br />
+        <span id="mensagem"></span>
+    </div>
+</div>
 
