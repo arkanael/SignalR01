@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conta.cs" />
+    <Compile Include="DTO\SomatorioTipoConta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tipo\TipoConta.cs" />
   </ItemGroup>

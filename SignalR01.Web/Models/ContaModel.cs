@@ -31,4 +31,12 @@ namespace SignalR01.Web.Models
         public string Data { get; set; }
         public string Tipo { get; set; }
     }
+
+    //modelo de dados da requisição de pesquisa
+    public class ContaViewModelSomatorioTipo
+    {
+        public string TipoConta { get; set; }
+        public decimal Somatorio { get; set; }
+
+    }
 }

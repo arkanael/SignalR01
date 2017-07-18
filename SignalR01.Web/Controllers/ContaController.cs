@@ -7,6 +7,7 @@ using SignalR01.Repositorio.Contratos;
 using SignalR01.Web.Models;
 using SignalR01.Entidades;
 using SignalR01.Entidades.Tipo;
+using SignalR01.Repositorio.Persistencia;
 
 namespace SignalR01.Web.Controllers
 {
@@ -85,5 +86,29 @@ namespace SignalR01.Web.Controllers
             }
         }
 
+       public JsonResult ObterResumoContas(ContaViewModelFiltroPesquisa model)
+        {
+            try
+            {
+                var lista = new List<ContaViewModelSomatorioTipo>();
+
+                //Varrer os somotarios das contas
+                foreach (var c in contaRepositorio.ObterSomatorioPorData(model.DataInicio, model.DataTermino))
+                {
+                    var item = new ContaViewModelSomatorioTipo();
+
+                    item.TipoConta = c.Tipo.ToString();
+                    item.Somatorio = c.Somatorio;
+
+                    lista.Add(item);
+                }
+
+                return Json(lista);
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
+        }
     }
 }

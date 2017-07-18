@@ -5,6 +5,9 @@
 }
 
 @section script{
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
     <script type="text/javascript">
 
         //Inicializando os eventos do Jquery
@@ -13,9 +16,45 @@
             //Quando apertar o botão de pesquisa
             $("#btnpesquisa").click(function () {
                 pesquisarContas();
-                
+                obterResumoContas();
             });
         });
+
+        //Função para popular o grafico de receitas e despesas
+        function obterResumoContas(){
+
+            //JSON - JavaScript Object Notation..
+            var dados = {
+                DataInicio: $("#datainicio").val(),
+                DataTermino: $("#datatermino").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Conta/ObterResumoContas",
+                data: dados,
+                success: function (resumo) {
+                    var array = [];
+
+                    $.each(resumo, function (i, obj) {
+                        array.push({
+                            name: obj.TipoConta,
+                            data: obj.Somatorio
+                        });
+                    });
+
+                    $.each(array, function (i, point) {
+                        point.y = point.data;
+                    });
+                    $("#grafico").highcharts({
+                        chart: { type: "line" },
+                        title: { text: "Somatorio de Contas por Tipo" },
+                        series: [{ data: array }]
+                    });
+                }
+            });
+            
+        };
 
         //função para realizar a requisição de pesquisa ao controller..
         function pesquisarContas() {
@@ -112,6 +151,6 @@
         </table>
     </div>
     <div class="col-md-4">
-
-    </div>
+        <div id="grafico"></div>
+  </div>
 </div>
